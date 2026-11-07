@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Market : Numerasi Mengenal Uang - SD Kelas 3</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandYellow: '#FFD166',
+                        brandGreen: '#06D6A0',
+                        brandBlue: '#118AB2',
+                        brandRed: '#EF476F',
+                        brandDark: '#073B4C',
+                        brandBg: '#F8F9FA'
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        jakarta: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F0F4F8;
+            user-select: none;
+        }
+        h1, h2, h3, .font-fun {
+            font-family: 'Fredoka', cursive;
+        }
+        .btn-bounce {
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-bounce:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+        }
+        .btn-bounce:active {
+            transform: translateY(1px) scale(0.98);
+        }
+        .card-shadow {
+            box-shadow: 0 12px 30px -5px rgba(7, 59, 76, 0.08), 0 4px 10px -4px rgba(7, 59, 76, 0.04);
+        }
+        .card-3d {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 6px 6px -5px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        .card-3d:hover {
+            transform: translateY(-6px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+        }
+        .cash-note-3d {
+            transition: all 0.2s ease;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.6);
+            border-bottom: 4px solid rgba(0,0,0,0.15);
+        }
+        .cash-note-3d:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 5px 10px 18px rgba(0,0,0,0.25);
+        }
+        .pos-screen {
+            background: #0f2b1d;
+            color: #39ff14;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.3);
+            text-shadow: 0 0 5px rgba(57, 255, 20, 0.7);
+        }
+        .scanner-beam {
+            background: linear-gradient(180deg, rgba(239,71,111,0) 0%, rgba(239,71,111,0.8) 50%, rgba(239,71,111,0) 100%);
+            animation: scanAnim 1.8s infinite ease-in-out;
+        }
+        @keyframes scanAnim {
+            0% { top: 0%; opacity: 0.3; }
+            50% { top: 75%; opacity: 1; }
+            100% { top: 0%; opacity: 0.3; }
+        }
+        .bubble-money {
+            animation: floatBubble 3s ease-in-out infinite alternate;
+        }
+        @keyframes floatBubble {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-6px) rotate(3deg); }
+        }
+    </style>
+</head>
+<body class="text-brandDark min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-white border-b-4 border-brandYellow sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                
+                <!-- Logo & Title -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('konsep')">
+                    <div class="w-12 h-12 bg-gradient-to-tr from-amber-400 to-brandYellow rounded-2xl flex items-center justify-center text-2xl shadow-md text-brandDark transform rotate-3 border-2 border-white">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-bold text-brandDark leading-none tracking-wide">
+                            Math Market : Numerasi Mengenal Uang
+                        </h1>
+                        <p class="text-xs text-gray-500 font-semibold tracking-wider uppercase">Petualangan Belanja & Simulation Kasir SD Kelas 3</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs & Audio Controls -->
+                <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
+                    <nav class="flex bg-gray-100 p-1.5 rounded-2xl w-full sm:w-auto shadow-inner">
+                        <button id="tab-btn-konsep" onclick="switchTab('konsep')" class="px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 bg-brandBlue text-white shadow flex items-center gap-1.5 whitespace-nowrap">
+                            <i class="fa-solid fa-book-open text-brandYellow"></i> 1. Konsep Materi
+                        </button>
+                        <button id="tab-btn-penjelasan" onclick="switchTab('penjelasan')" class="px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-brandDark flex items-center gap-1.5 whitespace-nowrap">
+                            <i class="fa-solid fa-coins text-amber-500"></i> 2. Mengenal Uang
+                        </button>
+                        <button id="tab-btn-materi" onclick="switchTab('materi')" class="px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-brandDark flex items-center gap-1.5 whitespace-nowrap">
+                            <i class="fa-solid fa-money-bill-wave text-emerald-500"></i> 3. Pecahan Uang
+                        </button>
+                        <button id="tab-btn-pasar" onclick="switchTab('pasar')" class="px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-brandDark flex items-center gap-1.5 whitespace-nowrap">
+                            <i class="fa-solid fa-barcode text-brandGreen"></i> 4. Supermarket Virtual
+                        </button>
+                        <button id="tab-btn-kuis" onclick="switchTab('kuis')" class="px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-brandDark flex items-center gap-1.5 whitespace-nowrap">
+                            <i class="fa-solid fa-cash-register text-brandRed"></i> 5. Game Kasir Toko!
+                        </button>
+                    </nav>
+
+                    <!-- Audio Control Buttons -->
+                    <button id="btn-toggle-audio" onclick="toggleAudio()" class="p-2.5 rounded-xl bg-amber-100 text-amber-900 border-2 border-amber-300 hover:bg-amber-200 font-bold text-xs flex items-center gap-1.5 shadow-sm whitespace-nowrap" title="Putar / Hentikan Musik Latar Ceria">
+                        <i id="audio-icon" class="fa-solid fa-music text-amber-600"></i> <span id="audio-text">Musik: On</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- SESI 1: PANDUAN & KONSEP -->
+        <section id="section-konsep" class="space-y-6">
+            <div class="bg-gradient-to-r from-brandBlue via-teal-500 to-emerald-500 rounded-3xl p-6 sm:p-8 text-white card-shadow relative overflow-hidden border-2 border-teal-300">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">PBL & Pembelajaran Mendalam (Deep Learning)</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-fun">1. Konsep Materi</h2>
+                    <p class="mt-3 text-white/90 text-sm sm:text-base leading-relaxed">
+                        Pembelajaran interaktif berbasis masalah nyata untuk siswa SD Kelas 3. Siswa bertindak sebagai pembeli dengan modal Rp 75.000 dan kasir minimarket yang melayani pembayaran hingga nominal Rp 100.000.
+                    </p>
+                </div>
+                <div class="absolute -right-4 -bottom-10 opacity-20 text-9xl">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl border-2 border-brandYellow card-shadow">
+                    <div class="w-12 h-12 rounded-2xl bg-brandYellow/20 text-brandYellow flex items-center justify-center text-2xl font-bold mb-4">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brandDark mb-2 font-fun">1. Berkesadaran (Mindful)</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Memahami batas anggaran modal Rp75.000 dan memprioritaskan barang kebutuhan sekolah.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border-2 border-brandGreen card-shadow">
+                    <div class="w-12 h-12 rounded-2xl bg-brandGreen/20 text-brandGreen flex items-center justify-center text-2xl font-bold mb-4">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brandDark mb-2 font-fun">2. Bermakna (Meaningful)</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Pengurangan dan penjumlahan uang diterapkan langsung pada mesin kasir interaktif 3D.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border-2 border-brandRed card-shadow">
+                    <div class="w-12 h-12 rounded-2xl bg-brandRed/20 text-brandRed flex items-center justify-center text-2xl font-bold mb-4">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brandDark mb-2 font-fun">3. Menggembirakan (Joyful)</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Simulasi kasir 3D dengan 10 tantangan pelanggan, papan ketik angka, dan efek konfeti interaktif.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SESI 2: MENGENAL NOMINAL & FUNGSI UANG -->
+        <section id="section-penjelasan" class="hidden space-y-6">
+            <!-- Header Banner -->
+            <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 rounded-3xl p-6 sm:p-8 text-white card-shadow relative overflow-hidden border-2 border-amber-300">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Materi Dasar SD Kelas 3</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-fun">2. Mengenal Uang</h2>
+                    <p class="mt-3 text-white/95 text-sm sm:text-base leading-relaxed">
+                        Klik tombol topik interaktif di bawah untuk membuka pop-up kartu edukasi interaktif dan geser (swipe) kartunya untuk mempelajari penjelasannya!
+                    </p>
+                </div>
+                <div class="absolute -right-4 -bottom-10 opacity-20 text-9xl">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+            </div>
+
+            <!-- Tombol Interaktif Pop-up Topik Uang -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div onclick="openTopicPopup(0)" class="btn-bounce bg-white p-5 rounded-3xl border-2 border-amber-400 card-shadow cursor-pointer flex flex-col justify-between items-start space-y-3 hover:bg-amber-50">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-brandDark font-fun">1. Apa itu Uang?</h3>
+                        <p class="text-xs text-gray-500 mt-1">Klik untuk swipe kartu penjelasan pengertian uang</p>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600 flex items-center gap-1">Buka & Swipe <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div onclick="openTopicPopup(1)" class="btn-bounce bg-white p-5 rounded-3xl border-2 border-blue-400 card-shadow cursor-pointer flex flex-col justify-between items-start space-y-3 hover:bg-blue-50">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-brandDark font-fun">2. Fungsi Uang</h3>
+                        <p class="text-xs text-gray-500 mt-1">Klik untuk swipe kartu fungsi & kegunaan uang</p>
+                    </div>
+                    <span class="text-xs font-bold text-blue-600 flex items-center gap-1">Buka & Swipe <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div onclick="openTopicPopup(2)" class="btn-bounce bg-white p-5 rounded-3xl border-2 border-emerald-400 card-shadow cursor-pointer flex flex-col justify-between items-start space-y-3 hover:bg-emerald-50">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-brandDark font-fun">3. Bijak Menggunakan Uang</h3>
+                        <p class="text-xs text-gray-500 mt-1">Klik untuk swipe kartu cara bijak mengelola uang</p>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-600 flex items-center gap-1">Buka & Swipe <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div onclick="openTopicPopup(3)" class="btn-bounce bg-white p-5 rounded-3xl border-2 border-purple-400 card-shadow cursor-pointer flex flex-col justify-between items-start space-y-3 hover:bg-purple-50">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-2xl font-bold">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-brandDark font-fun">4. Kenapa Harus Bijak?</h3>
+                        <p class="text-xs text-gray-500 mt-1">Klik untuk swipe kartu alasan pentingnya bijak beruang</p>
+                    </div>
+                    <span class="text-xs font-bold text-purple-600 flex items-center gap-1">Buka & Swipe <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Tabel Kesetaraan Nominal Uang -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl card-shadow border-2 border-amber-300 space-y-4">
+                <div class="flex items-center justify-between border-b pb-3">
+                    <div>
+                        <h3 class="text-2xl font-bold text-brandDark font-fun flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-amber-500"></i> Kesetaraan Nilai Nominal Uang (Rp 2.000 s.d. Rp 100.000)
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">Satu nilai nominal uang dapat diperoleh dari kumpulan pecahan uang kertas lainnya.</p>
+                    </div>
+                    <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full hidden sm:inline-block">Matematika SD Kelas 3</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-2">
+                        <div class="font-bold text-amber-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-amber-500 text-white px-2.5 py-0.5 rounded-xl">Rp 2.000</span>
+                        </div>
+                        <p class="text-gray-700">Dapat diperoleh dari: <strong>2 lembar Rp 1.000</strong></p>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-2">
+                        <div class="font-bold text-amber-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-amber-600 text-white px-2.5 py-0.5 rounded-xl">Rp 5.000</span>
+                        </div>
+                        <p class="text-gray-700">Dapat diperoleh dari: <strong>2 lembar Rp 2.000 + 1 lembar Rp 1.000</strong> (atau 5 lembar Rp 1.000)</p>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded-2xl border border-purple-200 space-y-2">
+                        <div class="font-bold text-purple-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-purple-600 text-white px-2.5 py-0.5 rounded-xl">Rp 10.000</span>
+                        </div>
+                        <p class="text-gray-700">Dapat diperoleh dari: <strong>2 lembar Rp 5.000</strong> (atau 5 lembar Rp 2.000)</p>
+                    </div>
+
+                    <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-300 space-y-2">
+                        <div class="font-bold text-emerald-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-emerald-600 text-white px-2.5 py-0.5 rounded-xl">Rp 20.000</span>
+                        </div>
+                        <p class="text-gray-800 font-semibold">
+                            Dapat diperoleh dari: <span class="text-emerald-700 font-bold">1 lembar Rp 10.000 + 2 lembar Rp 5.000</span>
+                        </p>
+                        <p class="text-gray-500 text-xs italic">(Atau 2 lembar Rp 10.000 / 4 lembar Rp 5.000)</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200 space-y-2">
+                        <div class="font-bold text-blue-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-blue-600 text-white px-2.5 py-0.5 rounded-xl">Rp 50.000</span>
+                        </div>
+                        <p class="text-gray-700">Dapat diperoleh dari: <strong>2 lembar Rp 20.000 + 1 lembar Rp 10.000</strong> (atau 5 lembar Rp 10.000)</p>
+                    </div>
+
+                    <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200 space-y-2">
+                        <div class="font-bold text-red-900 text-base font-fun flex items-center gap-2">
+                            <span class="bg-red-600 text-white px-2.5 py-0.5 rounded-xl">Rp 100.000</span>
+                        </div>
+                        <p class="text-gray-700">Dapat diperoleh dari: <strong>2 lembar Rp 50.000</strong> (atau 5 lembar Rp 20.000)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SESI 3: PECAHAN UANG & GAME BUBBLE -->
+        <section id="section-materi" class="hidden space-y-6">
+            <!-- Banner Intro Materi -->
+            <div class="bg-gradient-to-r from-amber-400 via-orange-400 to-brandYellow rounded-3xl p-6 sm:p-8 text-brandDark card-shadow relative overflow-hidden border-2 border-amber-300">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-white/80 text-brandDark text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider shadow-sm">Matematika SD Kelas 3</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mt-2 font-fun">3. Pecahan Uang</h2>
+                    <p class="mt-3 text-brandDark/90 text-sm sm:text-base leading-relaxed font-medium">
+                        Pelajari detail pecahan uang kertas Rupiah atau mainkan game interaktif penjumlahan bubble nominal uang di bawah ini!
+                    </p>
+                </div>
+                <div class="absolute -right-4 -bottom-10 opacity-20 text-9xl">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+            </div>
+
+            <!-- MINI GAME: BUBBLE NOMINAL PENJUMLAHAN UANG -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-6 sm:p-8 rounded-3xl text-white card-shadow border-4 border-indigo-400 space-y-6 relative overflow-hidden">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-indigo-700/60 pb-4">
+                    <div>
+                        <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Mini Game Interaktif</span>
+                        <h3 class="text-2xl font-bold font-fun text-amber-300 mt-1 flex items-center gap-2">
+                            <i class="fa-solid fa-coins text-amber-400"></i> Tantangan Kumpulan Bubble Uang
+                        </h3>
+                    </div>
+                    <div class="bg-indigo-950 px-4 py-2 rounded-2xl border border-indigo-700 flex items-center gap-4">
+                        <div class="text-center">
+                            <span class="text-[9px] text-gray-400 uppercase font-bold block">Target Uang:</span>
+                            <span id="bubble-target-display" class="text-xl font-black font-fun text-amber-400">Rp 50.000</span>
+                        </div>
+                        <div class="w-px h-8 bg-indigo-800"></div>
+                        <div class="text-center">
+                            <span class="text-[9px] text-gray-400 uppercase font-bold block">Total Bubble:</span>
+                            <span id="bubble-current-display" class="text-xl font-black font-fun text-emerald-400">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soal & Pilihan Bubble -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <!-- Left: Bubble Generator -->
+                    <div class="md:col-span-5 bg-indigo-950/60 p-4 rounded-2xl border border-indigo-700 space-y-3">
+                        <p class="text-xs font-semibold text-indigo-200">
+                            <strong>Instruksi:</strong> Klik bubble nominal di bawah untuk menambahkannya ke dalam wadah penjumlahan hingga jumlahnya <u>pas setara</u> dengan target!
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-2.5 pt-2">
+                            <button onclick="addMoneyBubble(20000)" class="btn-bounce bubble-money p-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-fun font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg border border-emerald-400">
+                                <i class="fa-solid fa-circle-plus text-xs"></i> + Rp 20.000
+                            </button>
+                            <button onclick="addMoneyBubble(10000)" class="btn-bounce bubble-money p-3 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-fun font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg border border-purple-400">
+                                <i class="fa-solid fa-circle-plus text-xs"></i> + Rp 10.000
+                            </button>
+                            <button onclick="addMoneyBubble(5000)" class="btn-bounce bubble-money p-3 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-fun font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg border border-amber-400">
+                                <i class="fa-solid fa-circle-plus text-xs"></i> + Rp 5.000
+                            </button>
+                            <button onclick="addMoneyBubble(2000)" class="btn-bounce bubble-money p-3 rounded-2xl bg-slate-600 hover:bg-slate-500 text-white font-fun font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg border border-slate-400">
+                                <i class="fa-solid fa-circle-plus text-xs"></i> + Rp 2.000
+                            </button>
+                            <button onclick="addMoneyBubble(1000)" class="btn-bounce bubble-money p-3 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-fun font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg border border-teal-400 col-span-2">
+                                <i class="fa-solid fa-circle-plus text-xs"></i> + Rp 1.000
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Drop Basket Container -->
+                    <div class="md:col-span-7 bg-indigo-950/90 p-5 rounded-2xl border-2 border-dashed border-indigo-500 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-indigo-300 font-fun flex items-center gap-1">
+                                    <i class="fa-solid fa-basket-shopping text-amber-400"></i> Wadah Penjumlahan Bubble:
+                                </span>
+                                <button onclick="resetBubbleGame()" class="text-[11px] bg-red-900/60 hover:bg-red-800 text-red-200 px-3 py-1 rounded-xl font-bold border border-red-700">
+                                    <i class="fa-solid fa-rotate-left"></i> Reset
+                                </button>
+                            </div>
+
+                            <!-- Visual Stack Bubbles -->
+                            <div id="bubble-basket" class="flex flex-wrap gap-2 min-h-[100px] items-center p-3 bg-indigo-900/40 rounded-xl border border-indigo-800">
+                                <span class="text-gray-400 text-xs italic">Wadah masih kosong. Klik bubble nominal di sebelah kiri!</span>
+                            </div>
+                        </div>
+
+                        <!-- Feedback Verification & Next Question -->
+                        <div class="mt-4 pt-3 border-t border-indigo-800 flex justify-between items-center">
+                            <span id="bubble-feedback-text" class="text-xs font-bold text-indigo-200">Kumpulkan pecahan hingga mencapai Rp 50.000</span>
+                            <button onclick="nextBubbleTarget()" id="btn-next-bubble" class="btn-bounce bg-amber-400 text-amber-950 font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-1 hidden">
+                                Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Kartu Pecahan Uang Rupiah -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl card-shadow border-2 border-amber-200 space-y-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-brandDark flex items-center gap-3 font-fun">
+                        <i class="fa-solid fa-hand-pointer text-amber-500 animate-bounce"></i> Detail Pecahan Uang Kertas Rupiah
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">Klik gambar uang untuk melihat foto realistis depan & belakang beserta penjelasannya.</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                    <div onclick="openMoneyInfoModal(0)" class="bg-red-50 p-3 rounded-2xl border-2 border-red-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-red-600 to-rose-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 100.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-red-900">100 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(1)" class="bg-blue-50 p-3 rounded-2xl border-2 border-blue-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 50.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-blue-900">50 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(2)" class="bg-emerald-50 p-3 rounded-2xl border-2 border-emerald-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 20.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-emerald-900">20 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(3)" class="bg-purple-50 p-3 rounded-2xl border-2 border-purple-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-purple-600 to-violet-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 10.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-purple-900">10 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(4)" class="bg-amber-50 p-3 rounded-2xl border-2 border-amber-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-amber-600 to-yellow-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 5.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-amber-900">5 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(5)" class="bg-stone-50 p-3 rounded-2xl border-2 border-stone-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-gray-500 to-slate-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 2.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-stone-800">2 Ribu</h4></div>
+                    </div>
+
+                    <div onclick="openMoneyInfoModal(6)" class="bg-teal-50 p-3 rounded-2xl border-2 border-teal-400 text-center card-3d flex flex-col justify-between cursor-pointer btn-bounce">
+                        <div class="h-16 bg-gradient-to-r from-teal-600 to-cyan-700 text-white rounded-xl flex flex-col items-center justify-center p-1 border border-white">
+                            <span class="text-xs font-black font-fun">Rp 1.000</span>
+                        </div>
+                        <div class="mt-2"><h4 class="font-bold text-xs text-teal-900">1 Ribu</h4></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SESI 4: SUPERMARKET VIRTUAL -->
+        <section id="section-pasar" class="hidden space-y-6">
+            
+            <!-- Dompet Modal & Selector 5 Level Misi Belanja -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Modal Info 75.000 -->
+                <div class="bg-gradient-to-br from-brandYellow via-amber-400 to-orange-400 p-6 rounded-3xl text-brandDark card-shadow flex flex-col justify-between relative overflow-hidden border-2 border-amber-300">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold bg-white/70 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Modal Belanja Kamu</span>
+                            <i class="fa-solid fa-wallet text-3xl text-brandDark/70"></i>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-xs text-brandDark/80 font-bold uppercase">Uang Dompet Sisa</div>
+                            <div id="display-modal" class="text-3xl sm:text-4xl font-extrabold font-fun">Rp 75.000</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-brandDark/10 flex justify-between items-center text-xs font-semibold">
+                        <span>Total Keranjang:</span>
+                        <span id="display-total-keranjang" class="text-lg font-bold text-brandDark">Rp 0</span>
+                    </div>
+                </div>
+
+                <!-- 5 Level Mission Selector -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-3xl card-shadow flex flex-col justify-between border-2 border-brandBlue/20">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-lg font-bold text-brandDark flex items-center gap-2 font-fun">
+                                <i class="fa-solid fa-bullseye text-brandRed"></i> 4. Supermarket Virtual
+                            </h3>
+                            <span id="mission-badge" class="text-xs bg-brandBlue text-white font-bold px-3 py-1 rounded-full">Level: Bebas</span>
+                        </div>
+                        <p id="mission-description" class="text-xs sm:text-sm text-gray-600 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                            <strong>Misi Bebas:</strong> Scan barang favoritmu di mesin kasir lalu masukkan ke keranjang belanja tanpa melebihi Rp 75.000!
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-3">
+                        <button onclick="setMission(1)" id="btn-misi-1" class="btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center">
+                            Level 1<br><span class="text-[9px] text-gray-500">Pas Rp 20rb</span>
+                        </button>
+                        <button onclick="setMission(2)" id="btn-misi-2" class="btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center">
+                            Level 2<br><span class="text-[9px] text-gray-500">Kembalian 25rb</span>
+                        </button>
+                        <button onclick="setMission(3)" id="btn-misi-3" class="btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center">
+                            Level 3<br><span class="text-[9px] text-gray-500">4 Barang Beda</span>
+                        </button>
+                        <button onclick="setMission(4)" id="btn-misi-4" class="btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center">
+                            Level 4<br><span class="text-[9px] text-gray-500">Sisa > 40rb</span>
+                        </button>
+                        <button onclick="setMission(5)" id="btn-misi-5" class="btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center col-span-2 sm:col-span-1">
+                            Level 5<br><span class="text-[9px] text-gray-500">Sisa &lt; 5rb</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AREA MESIN SCANNER BARCODE 3D & KATALOG BARANG -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Katalog Barang -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-brandDark flex items-center gap-2 font-fun">
+                            <i class="fa-solid fa-boxes-packing text-brandBlue"></i> Katalog Barang Supermarket
+                        </h3>
+                        <span class="text-xs text-gray-500 font-semibold">Seret / Klik ikon untuk Scan Harga</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="items-grid">
+                        <!-- Dynamic items rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- MESIN SCANNER 3D INTERAKTIF & KERANJANG -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- Area Scanner Barcode 3D -->
+                    <div id="drop-zone-scanner" ondragover="allowDrop(event)" ondrop="handleDropScan(event)" class="bg-gradient-to-b from-slate-800 to-slate-900 p-5 rounded-3xl card-shadow border-4 border-slate-700 text-white text-center space-y-3 relative overflow-hidden">
+                        <div class="scanner-beam absolute inset-x-0 h-8 pointer-events-none"></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2 text-xs text-slate-300">
+                            <span class="font-bold flex items-center gap-1"><i class="fa-solid fa-barcode text-brandRed"></i> MESIN SCANNER 3D</span>
+                            <span class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Laser Sensor</span>
+                        </div>
+
+                        <div class="py-3">
+                            <div id="scanner-icon-display" class="w-16 h-16 rounded-2xl bg-slate-800 border-2 border-dashed border-slate-600 flex items-center justify-center text-3xl mx-auto text-slate-500">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </div>
+                            <h4 id="scanner-name-display" class="text-sm font-bold text-brandYellow mt-2">Taruh / Seret Barang di Sini</h4>
+                            <p id="scanner-price-display" class="text-xs text-gray-400 mt-0.5">Mesin akan membacakan harga nominal barang</p>
+                        </div>
+
+                        <button id="btn-add-scanned" onclick="addScannedToCart()" class="btn-bounce w-full bg-brandGreen text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 hidden">
+                            <i class="fa-solid fa-cart-plus"></i> Masukkan ke Keranjang
+                        </button>
+                    </div>
+
+                    <!-- Keranjang Belanja -->
+                    <div class="bg-white p-5 rounded-3xl card-shadow border-2 border-brandYellow/40 space-y-4">
+                        <div class="flex items-center justify-between border-b pb-2">
+                            <h3 class="text-lg font-bold text-brandDark flex items-center gap-2 font-fun">
+                                <i class="fa-solid fa-cart-shopping text-brandGreen"></i> Keranjang Saya
+                            </h3>
+                            <button onclick="clearCart()" class="text-xs text-brandRed font-bold hover:underline">
+                                <i class="fa-solid fa-trash me-1"></i> Kosongkan
+                            </button>
+                        </div>
+
+                        <div id="cart-list" class="space-y-2 max-h-44 overflow-y-auto pr-1">
+                            <p class="text-gray-400 text-xs italic text-center py-6">Keranjang belanja masih kosong.</p>
+                        </div>
+
+                        <div class="pt-3 border-t space-y-2">
+                            <div class="flex justify-between text-xs text-gray-600">
+                                <span>Total Belanja:</span>
+                                <span id="cart-total" class="font-bold text-brandDark text-sm">Rp 0</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-600">
+                                <span>Modal Dompet:</span>
+                                <span class="font-bold text-brandBlue">Rp 75.000</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-dashed border-gray-300">
+                            <label class="block text-xs font-bold text-brandDark mb-1">Periksa Kembalian (Rp 75.000 - Total):</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="input-kembalian" placeholder="Masukan angka sisa kembalian..." class="w-full px-3 py-2 border-2 border-gray-300 rounded-xl font-bold text-xs text-brandDark focus:outline-none focus:border-brandBlue">
+                                <button onclick="verifyTransaction()" class="btn-bounce bg-brandGreen text-white px-4 py-2 rounded-xl font-bold text-xs whitespace-nowrap">
+                                    Cek
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SESI 5: GAME KASIR TOKO! -->
+        <section id="section-kuis" class="hidden space-y-6">
+            <div class="bg-gradient-to-r from-brandDark to-slate-800 p-6 rounded-3xl text-white card-shadow flex flex-col sm:flex-row justify-between items-center gap-4 border-b-4 border-brandRed">
+                <div>
+                    <span class="bg-brandRed text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Tantangan 10 Pelanggan</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-1 font-fun text-brandYellow">
+                        <i class="fa-solid fa-cash-register me-2"></i> 5. Game Kasir Toko!
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-300">Selesaikan 10 soal tantangan kasir untuk mendapatkan nilai 100!</p>
+                </div>
+                <div class="flex items-center gap-4 bg-white/10 px-5 py-3 rounded-2xl border border-white/20 backdrop-blur-sm">
+                    <div class="text-center">
+                        <span class="text-[10px] text-gray-300 font-bold uppercase block">Skor Kasir</span>
+                        <span id="quiz-score" class="text-2xl font-extrabold text-brandGreen font-fun">0</span>
+                    </div>
+                    <div class="w-px h-8 bg-white/20"></div>
+                    <div class="text-center">
+                        <span class="text-[10px] text-gray-300 font-bold uppercase block">Pelanggan</span>
+                        <span id="quiz-progress" class="text-2xl font-extrabold text-brandYellow font-fun">1/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulator Kasir 3D Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-6xl mx-auto">
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl card-shadow border-2 border-slate-200 flex flex-col justify-between space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between border-b pb-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <div id="customer-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandBlue to-teal-400 text-white flex items-center justify-center text-2xl shadow-md border-2 border-white">
+                                    <i class="fa-solid fa-user-ninja"></i>
+                                </div>
+                                <div>
+                                    <span id="quiz-level-badge" class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Pelanggan #1</span>
+                                    <h4 id="customer-name" class="font-bold text-brandDark text-base">Pelanggan Antrean 1</h4>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">Status: Kasir Aktif</span>
+                        </div>
+
+                        <p id="quiz-question" class="text-sm sm:text-base font-bold text-brandDark leading-snug">
+                            Loading tantangan kasir...
+                        </p>
+
+                        <div class="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block">Barang di Meja Kasir:</span>
+                            <div id="customer-items-visual" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200">
+                        <span class="text-xs font-bold text-amber-900 uppercase tracking-wider block mb-2">Uang Diberikan Pelanggan:</span>
+                        <div id="customer-payment-visual" class="flex items-center gap-3"></div>
+                    </div>
+                </div>
+
+                <!-- POS Keypad -->
+                <div class="lg:col-span-5 bg-gradient-to-b from-slate-700 to-slate-900 p-6 rounded-3xl card-shadow border-4 border-slate-600 text-white flex flex-col justify-between space-y-5">
+                    <div class="pos-screen p-4 rounded-2xl border-4 border-slate-900 space-y-2">
+                        <div class="flex justify-between text-xs opacity-80 border-b border-green-800 pb-1">
+                            <span>SUPERMARKET POS v12.0</span>
+                            <span id="pos-time">10:00 AM</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs">
+                                <span>TOTAL BELANJA:</span>
+                                <span id="pos-total-display">Rp 0</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span>UANG DITERIMA:</span>
+                                <span id="pos-paid-display">Rp 0</span>
+                            </div>
+                            <div class="flex justify-between text-sm font-bold border-t border-green-800 pt-1 text-yellow-300">
+                                <span>KEMBALIAN SUPPOSE:</span>
+                                <span id="pos-change-input">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2 text-center">Pilih Uang Kembalian yang Tepat:</label>
+                        <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+                    </div>
+
+                    <div id="quiz-feedback" class="hidden p-3.5 rounded-2xl border space-y-2">
+                        <div id="feedback-status" class="font-bold flex items-center gap-2 text-sm"></div>
+                        <p id="feedback-explanation" class="text-xs text-gray-200 leading-relaxed"></p>
+                        <button id="btn-next-quiz" onclick="nextQuestion()" class="btn-bounce w-full bg-brandYellow text-brandDark font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 mt-2 shadow">
+                            Pelanggan Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t mt-12 py-6 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-semibold text-brandDark">MATH MARKET &copy; 2026 - Media Pembelajaran Digital Matematika SD Kelas 3</p>
+            <p class="mt-1 text-gray-400">Pengenalan Uang Kertas Rupiah & Simulasi Pembayaran Kasir</p>
+        </div>
+    </footer>
+
+    <!-- MODAL GENERAL -->
+    <div id="modal-dialog" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full card-shadow text-center space-y-4 transform scale-95 transition-all">
+            <div id="modal-icon" class="w-16 h-16 rounded-full bg-brandGreen/20 text-brandGreen flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="modal-title" class="text-2xl font-bold font-fun text-brandDark">Hebat Sekali!</h3>
+            <p id="modal-message" class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Perhitungan kamu benar 100%. Uang kembalian yang dihitung sangat akurat!
+            </p>
+            <button onclick="closeModal()" class="btn-bounce w-full bg-brandBlue text-white font-bold py-3 rounded-xl text-sm">
+                Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL UANG (SESI 3) -->
+    <div id="modal-money-info" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl p-5 sm:p-6 max-w-xl w-full card-shadow text-center space-y-4 relative border-4 border-amber-300 my-auto">
+            <button onclick="closeMoneyInfoModal()" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 flex items-center justify-center font-bold z-30 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div>
+                <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Detail Uang Kertas Rupiah</span>
+                <h3 id="info-modal-title" class="text-2xl font-bold font-fun text-brandDark mt-1">Penjelasan Uang Rp 100.000</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="bg-slate-900 rounded-2xl p-3 border-2 border-amber-300 relative overflow-hidden flex flex-col justify-between h-40 text-left shadow-md">
+                    <div id="info-front-bg" class="absolute inset-0 bg-cover bg-center opacity-45"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
+                    <div class="relative z-10 flex justify-between items-center">
+                        <span class="text-[9px] font-bold text-amber-300">SISI DEPAN</span>
+                        <span id="info-front-badge" class="text-[9px] font-black px-2 py-0.5 rounded bg-red-500 text-white">RUPIAH</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div id="info-front-nominal" class="text-2xl font-black font-fun text-amber-400">Rp 100.000</div>
+                        <div id="info-front-hero" class="text-[11px] font-bold text-white mt-0.5">Soekarno - Hatta</div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 rounded-2xl p-3 border-2 border-emerald-400 relative overflow-hidden flex flex-col justify-between h-40 text-left shadow-md">
+                    <div id="info-back-bg" class="absolute inset-0 bg-cover bg-center opacity-45"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
+                    <div class="relative z-10 flex justify-between items-center">
+                        <span class="text-[9px] font-bold text-emerald-300">SISI BELAKANG</span>
+                        <span class="text-[9px] font-black px-2 py-0.5 rounded bg-emerald-500 text-white">KEBUDAYAAN</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div id="info-back-nominal" class="text-2xl font-black font-fun text-emerald-400">Rp 100.000</div>
+                        <div id="info-back-culture" class="text-[11px] font-semibold text-emerald-100 mt-0.5">Tari Topeng & Raja Ampat</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50/90 p-4 rounded-2xl border border-amber-200 text-left space-y-2 text-xs">
+                <div>
+                    <h4 class="font-bold text-brandDark text-xs mb-1 font-fun">
+                        <i class="fa-solid fa-align-left text-amber-600 me-1"></i> Rangkuman Uang:
+                    </h4>
+                    <p id="info-summary" class="text-gray-700 leading-relaxed font-medium">Penjelasan singkat.</p>
+                </div>
+                <div class="pt-2 border-t border-amber-200/60 grid grid-cols-2 gap-2 text-[11px]">
+                    <div><strong class="text-brandDark block">Ukuran:</strong><span id="info-size" class="text-brandBlue font-semibold">151 x 65 mm</span></div>
+                    <div><strong class="text-brandDark block">Dominan Warna:</strong><span id="info-color" class="text-gray-700 font-semibold">Merah</span></div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-1 border-t border-gray-100 text-xs">
+                <div class="flex gap-2">
+                    <button onclick="prevMoneyInfo()" class="btn-bounce bg-gray-100 hover:bg-amber-400 hover:text-white px-3 py-1.5 rounded-xl font-bold text-gray-700 text-xs">
+                        <i class="fa-solid fa-chevron-left"></i> Sebelum
+                    </button>
+                    <button onclick="nextMoneyInfo()" class="btn-bounce bg-gray-100 hover:bg-amber-400 hover:text-white px-3 py-1.5 rounded-xl font-bold text-gray-700 text-xs">
+                        Berikut <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+                <button onclick="closeMoneyInfoModal()" class="btn-bounce bg-brandRed text-white font-bold px-4 py-1.5 rounded-xl">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL POPUP SWIPE KARTU TOPIK (SESI 2 INTERAKTIF) -->
+    <div id="modal-topic-popup" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full card-shadow text-center space-y-5 relative border-4 border-amber-300">
+            <button onclick="closeTopicPopup()" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 flex items-center justify-center font-bold z-30 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Popup Header & Counter -->
+            <div class="flex flex-col items-center">
+                <span id="popup-category-badge" class="bg-amber-100 text-amber-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Topik Edukasi Uang</span>
+                <h3 id="popup-main-title" class="text-2xl font-bold font-fun text-brandDark mt-1">1. Apa itu Uang?</h3>
+                <span id="card-swipe-counter" class="text-xs font-semibold text-gray-500 mt-1">Kartu 1 dari 3</span>
+            </div>
+
+            <!-- Card Slider Container -->
+            <div class="relative overflow-hidden min-h-[200px] flex items-center justify-center bg-gray-50 p-6 rounded-2xl border-2 border-dashed border-amber-200">
+                <div id="topic-card-content" class="space-y-3 transition-all duration-300">
+                    <div id="topic-card-icon" class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl mx-auto mb-2">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h4 id="topic-card-subtitle" class="text-lg font-bold text-brandDark font-fun">Definisi Alat Pembayaran</h4>
+                    <p id="topic-card-body" class="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium">
+                        Penjelasan kartu...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Controls (Swipe / Button) -->
+            <div class="flex items-center justify-between pt-2">
+                <button onclick="prevTopicCard()" class="btn-bounce bg-gray-100 hover:bg-amber-400 hover:text-white px-4 py-2 rounded-xl font-bold text-gray-700 text-xs flex items-center gap-1">
+                    <i class="fa-solid fa-chevron-left"></i> Geser Kiri
+                </button>
+
+                <div class="flex gap-1.5" id="topic-card-dots">
+                    <!-- Dots via JS -->
+                </div>
+
+                <button onclick="nextTopicCard()" class="btn-bounce bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1">
+                    Geser Kanan <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT & WEB AUDIO SYNTHESIZER -->
+    <script>
+        // WEB AUDIO API SYNTHESIZER (CERIA BGM & SFX)
+        let audioCtx = null;
+        let bgmInterval = null;
+        let isAudioPlaying = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            initAudio();
+            if (!audioCtx || !isAudioPlaying) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'scan') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1800, now);
+                osc.frequency.exponentialRampToValueAtTime(2400, now + 0.08);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'coin') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(987.77, now);
+                osc.frequency.setValueAtTime(1318.51, now + 0.08);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'success') {
+                [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.type = 'sine';
+                    o.frequency.setValueAtTime(freq, now + (i * 0.08));
+                    g.gain.setValueAtTime(0.25, now + (i * 0.08));
+                    g.gain.linearRampToValueAtTime(0.01, now + (i * 0.08) + 0.2);
+                    o.start(now + (i * 0.08));
+                    o.stop(now + (i * 0.08) + 0.2);
+                });
+            }
+        }
+
+        function startBGM() {
+            initAudio();
+            if (bgmInterval) clearInterval(bgmInterval);
+            
+            const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
+            let noteIdx = 0;
+
+            bgmInterval = setInterval(() => {
+                if (!isAudioPlaying || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(notes[noteIdx], now);
+                    gain.gain.setValueAtTime(0.03, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                    noteIdx = (noteIdx + 1) % notes.length;
+                } catch(e){}
+            }, 450);
+        }
+
+        function toggleAudio() {
+            isAudioPlaying = !isAudioPlaying;
+            const btnText = document.getElementById('audio-text');
+            const btnIcon = document.getElementById('audio-icon');
+
+            if (isAudioPlaying) {
+                btnText.innerText = "Musik: On";
+                btnIcon.className = "fa-solid fa-music text-amber-600";
+                startBGM();
+            } else {
+                btnText.innerText = "Musik: Off";
+                btnIcon.className = "fa-solid fa-volume-xmark text-gray-400";
+                if (bgmInterval) clearInterval(bgmInterval);
+            }
+        }
+
+        // DATA INTERAKTIF POPUP SWIPE KARTU TOPIK (SESI 2)
+        const topicPopupData = [
+            {
+                title: "1. Apa itu Uang?",
+                badge: "Topik Uang 1",
+                badgeBg: "bg-amber-100 text-amber-900",
+                cards: [
+                    { icon: "fa-wallet text-amber-600 bg-amber-100", title: "Definisi Alat Pembayaran", body: "Uang adalah alat pembayaran sah yang diterbitkan resmi oleh Bank Indonesia untuk transaksi jual beli sehari-hari." },
+                    { icon: "fa-money-bill-wave text-emerald-600 bg-emerald-100", title: "Bentuk Uang Kertas & Logam", body: "Di Indonesia, uang hadir dalam bentuk kertas (seperti Rp 2.000 s.d. Rp 100.000) dan uang logam pecahan kecil." },
+                    { icon: "fa-hand-holding-dollar text-blue-600 bg-blue-100", title: "Alat Pemenuhan Kebutuhan", body: "Dengan uang, kita dapat membeli barang kebutuhan pokok seperti makanan, minuman, dan alat tulis sekolah." }
+                ]
+            },
+            {
+                title: "2. Fungsi & Kegunaan Uang",
+                badge: "Topik Uang 2",
+                badgeBg: "bg-blue-100 text-blue-900",
+                cards: [
+                    { icon: "fa-right-left text-blue-600 bg-blue-100", title: "1. Alat Tukar Pembayaran", body: "Memudahkan kita menukarkan nilai uang dengan barang belanjaan di minimarket atau kantin tanpa barter." },
+                    { icon: "fa-calculator text-indigo-600 bg-indigo-100", title: "2. Satuan Hitung Harga", body: "Mengukur dan menentukan harga suatu benda, misalnya harga buku tulis adalah Rp 5.000." },
+                    { icon: "fa-piggy-bank text-amber-600 bg-amber-100", title: "3. Penyimpan Nilai Kekayaan", body: "Uang dapat disimpan di dalam dompet atau tabungan bank untuk kebutuhan di masa depan." }
+                ]
+            },
+            {
+                title: "3. Bijak Menggunakan Uang",
+                badge: "Topik Uang 3",
+                badgeBg: "bg-emerald-100 text-emerald-900",
+                cards: [
+                    { icon: "fa-list-check text-emerald-600 bg-emerald-100", title: "Utamakan Kebutuhan", body: "Dahulukan barang kebutuhan utama seperti alat sekolah sebelum membeli barang keinginan/mainan." },
+                    { icon: "fa-coins text-amber-600 bg-amber-100", title: "Biasakan Menabung", body: "Selalu menyisihkan sebagian sisa uang saku harian ke dalam celengan anak pintar." },
+                    { icon: "fa-scale-balanced text-teal-600 bg-teal-100", title: "Tidak Boros & Belanja Cermat", body: "Membandingkan harga barang dan berbelanja sesuai dengan anggaran modal yang kita miliki." }
+                ]
+            },
+            {
+                title: "4. Kenapa Harus Bijak Menggunakan Uang?",
+                badge: "Topik Uang 4",
+                badgeBg: "bg-purple-100 text-purple-900",
+                cards: [
+                    { icon: "fa-shield-halved text-purple-600 bg-purple-100", title: "Menghadapi Kebutuhan Darurat", body: "Uang tabungan sangat berguna saat ada kebutuhan mendadak yang memerlukan biaya cepat." },
+                    { icon: "fa-seedling text-emerald-600 bg-emerald-100", title: "Melatih Sikap Disiplin & Mandiri", body: "Belajar mengelola uang sejak dini membuat kita menjadi anak yang bertanggung jawab dan tidak manja." },
+                    { icon: "fa-gift text-rose-600 bg-rose-100", title: "Mewujudkan Cita-cita Masa Depan", body: "Dengan rajin menabung, kita dapat membeli barang impian sendiri tanpa membebani orang tua." }
+                ]
+            }
+        ];
+
+        let activeTopicIndex = 0;
+        let activeCardIndex = 0;
+
+        function openTopicPopup(topicIndex) {
+            playSound('coin');
+            activeTopicIndex = topicIndex;
+            activeCardIndex = 0;
+            updateTopicPopupUI();
+            document.getElementById('modal-topic-popup').classList.remove('hidden');
+        }
+
+        function closeTopicPopup() {
+            document.getElementById('modal-topic-popup').classList.add('hidden');
+        }
+
+        function nextTopicCard() {
+            playSound('coin');
+            const cards = topicPopupData[activeTopicIndex].cards;
+            activeCardIndex = (activeCardIndex + 1) % cards.length;
+            updateTopicPopupUI();
+        }
+
+        function prevTopicCard() {
+            playSound('coin');
+            const cards = topicPopupData[activeTopicIndex].cards;
+            activeCardIndex = (activeCardIndex - 1 + cards.length) % cards.length;
+            updateTopicPopupUI();
+        }
+
+        function updateTopicPopupUI() {
+            const topic = topicPopupData[activeTopicIndex];
+            const card = topic.cards[activeCardIndex];
+
+            document.getElementById('popup-main-title').innerText = topic.title;
+            document.getElementById('popup-category-badge').innerText = topic.badge;
+            document.getElementById('popup-category-badge').className = `text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider ${topic.badgeBg}`;
+            document.getElementById('card-swipe-counter').innerText = `Kartu ${activeCardIndex + 1} dari ${topic.cards.length}`;
+
+            document.getElementById('topic-card-icon').className = `w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-2 ${card.icon}`;
+            document.getElementById('topic-card-subtitle').innerText = card.title;
+            document.getElementById('topic-card-body').innerText = card.body;
+
+            const dotsBox = document.getElementById('topic-card-dots');
+            dotsBox.innerHTML = '';
+            topic.cards.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === activeCardIndex ? 'bg-amber-500 w-5' : 'bg-gray-300'}`;
+                dotsBox.appendChild(dot);
+            });
+        }
+
+        // DATA UANG REALISTIS (SESI 3)
+        const moneyData = [
+            { nominalText: "Rp 100.000", title: "Uang Kertas Rp 100.000", hero: "Soekarno - Hatta", culture: "Tari Topeng Betawi & Raja Ampat", size: "151 x 65 mm", color: "Merah Cerah", badgeBg: "bg-red-500 text-white", summary: "Uang pecahan Rp 100.000 merupakan pecahan tertinggi di Indonesia.", frontImg: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1516690561799-46d8f7489abf?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 50.000", title: "Uang Kertas Rp 50.000", hero: "Ir. H. Djuanda", culture: "Tari Legong & Komodo", size: "146 x 65 mm", color: "Biru", badgeBg: "bg-blue-600 text-white", summary: "Uang pecahan Rp 50.000 berwarna biru cerah.", frontImg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 20.000", title: "Uang Kertas Rp 20.000", hero: "Dr. Sam Ratulangi", culture: "Tari Gong & Derawan", size: "141 x 65 mm", color: "Hijau", badgeBg: "bg-emerald-600 text-white", summary: "Uang pecahan Rp 20.000 berwarna hijau segar.", frontImg: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 10.000", title: "Uang Kertas Rp 10.000", hero: "Frans Kaisiepo", culture: "Tari Pakarena & Wakatobi", size: "136 x 65 mm", color: "Ungu", badgeBg: "bg-purple-600 text-white", summary: "Uang pecahan Rp 10.000 berwarna ungu.", frontImg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 5.000", title: "Uang Kertas Rp 5.000", hero: "Idham Chalid", culture: "Tari Gambyong & Bromo", size: "131 x 65 mm", color: "Cokelat", badgeBg: "bg-amber-600 text-white", summary: "Uang pecahan Rp 5.000 berwarna cokelat muda.", frontImg: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 2.000", title: "Uang Kertas Rp 2.000", hero: "M.H. Thamrin", culture: "Tari Piring & Ngarai Sianok", size: "126 x 65 mm", color: "Abu-Abu", badgeBg: "bg-stone-600 text-white", summary: "Uang pecahan Rp 2.000 berwarna abu-abu.", frontImg: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" },
+            { nominalText: "Rp 1.000", title: "Uang Kertas Rp 1.000", hero: "Tjut Meutia", culture: "Tari Tifa & Banda Neira", size: "121 x 65 mm", color: "Hijau Kebiruan", badgeBg: "bg-teal-600 text-white", summary: "Uang pecahan Rp 1.000 merupakan nilai kertas terkecil.", frontImg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80", backImg: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80" }
+        ];
+
+        // MINI GAME BUBBLE DATA
+        const bubbleTargets = [50000, 20000, 10000, 35000, 15000];
+        let currentTargetIndex = 0;
+        let currentBubbleTotal = 0;
+        let currentBubbles = [];
+
+        function initBubbleGame() {
+            const target = bubbleTargets[currentTargetIndex];
+            document.getElementById('bubble-target-display').innerText = `Rp ${target.toLocaleString('id-ID')}`;
+            resetBubbleGame();
+        }
+
+        function addMoneyBubble(value) {
+            playSound('coin');
+            currentBubbles.push(value);
+            currentBubbleTotal += value;
+            updateBubbleUI();
+        }
+
+        function resetBubbleGame() {
+            currentBubbles = [];
+            currentBubbleTotal = 0;
+            document.getElementById('btn-next-bubble').classList.add('hidden');
+            updateBubbleUI();
+        }
+
+        function updateBubbleUI() {
+            document.getElementById('bubble-current-display').innerText = `Rp ${currentBubbleTotal.toLocaleString('id-ID')}`;
+            const basket = document.getElementById('bubble-basket');
+            basket.innerHTML = '';
+
+            const target = bubbleTargets[currentTargetIndex];
+            const feedback = document.getElementById('bubble-feedback-text');
+
+            if (currentBubbles.length === 0) {
+                basket.innerHTML = `<span class="text-gray-400 text-xs italic">Wadah masih kosong. Klik bubble nominal di sebelah kiri!</span>`;
+            } else {
+                currentBubbles.forEach((val, idx) => {
+                    const b = document.createElement('div');
+                    b.className = "bg-amber-400 text-amber-950 font-extrabold px-3 py-1.5 rounded-full text-xs flex items-center gap-1 shadow-md font-fun bubble-money animate-bounce";
+                    b.innerHTML = `Rp ${val.toLocaleString('id-ID')} <i onclick="removeBubble(${idx})" class="fa-solid fa-xmark text-[10px] bg-amber-600 text-white p-0.5 rounded-full cursor-pointer hover:bg-red-600 ms-1"></i>`;
+                    basket.appendChild(b);
+                });
+            }
+
+            if (currentBubbleTotal === target) {
+                playSound('success');
+                triggerConfetti();
+                feedback.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-circle-check me-1"></i> HEBAT! Penjumlahan Tepat Rp ${target.toLocaleString('id-ID')}!</span>`;
+                document.getElementById('btn-next-bubble').classList.remove('hidden');
+            } else if (currentBubbleTotal > target) {
+                feedback.innerHTML = `<span class="text-red-400"><i class="fa-solid fa-circle-xmark me-1"></i> Kelebihan! Total melampaui target.</span>`;
+                document.getElementById('btn-next-bubble').classList.add('hidden');
+            } else {
+                feedback.innerText = `Kurang Rp ${(target - currentBubbleTotal).toLocaleString('id-ID')} lagi untuk mencapai target.`;
+                document.getElementById('btn-next-bubble').classList.add('hidden');
+            }
+        }
+
+        function removeBubble(index) {
+            currentBubbleTotal -= currentBubbles[index];
+            currentBubbles.splice(index, 1);
+            updateBubbleUI();
+        }
+
+        function nextBubbleTarget() {
+            currentTargetIndex = (currentTargetIndex + 1) % bubbleTargets.length;
+            initBubbleGame();
+        }
+
+        // KATALOG PRODUK PASAR VIRTUAL
+        const products = [
+            { id: 1, name: "Buku Tulis SD", price: 5000, icon: "fa-book-open text-blue-500", color: "bg-blue-50 border-blue-300" },
+            { id: 2, name: "Pensil Warna 12", price: 8000, icon: "fa-palette text-amber-500", color: "bg-yellow-50 border-yellow-300" },
+            { id: 3, name: "Penghapus Karet", price: 2000, icon: "fa-eraser text-red-400", color: "bg-red-50 border-red-300" },
+            { id: 4, name: "Susu UHT Cokelat", price: 12000, icon: "fa-wine-bottle text-amber-600", color: "bg-amber-50 border-amber-300" },
+            { id: 5, name: "Penggaris 30cm", price: 4000, icon: "fa-ruler-combined text-purple-500", color: "bg-purple-50 border-purple-300" },
+            { id: 6, name: "Roti Tawar Manis", price: 15000, icon: "fa-bread-slice text-orange-500", color: "bg-orange-50 border-orange-300" },
+            { id: 7, name: "Tas Ransel Sekolah", price: 45000, icon: "fa-bag-shopping text-pink-500", color: "bg-pink-50 border-pink-300" },
+            { id: 8, name: "Kotak Pensil", price: 25000, icon: "fa-box-open text-indigo-500", color: "bg-indigo-50 border-indigo-300" },
+            { id: 9, name: "Botol Air Minum", price: 30000, icon: "fa-bottle-water text-teal-500", color: "bg-teal-50 border-teal-300" },
+            { id: 10, name: "Biskuit Cokelat", price: 10000, icon: "fa-cookie-bite text-amber-700", color: "bg-amber-50 border-amber-400" },
+            { id: 11, name: "Crayon 24 Warna", price: 35000, icon: "fa-paint-brush text-rose-500", color: "bg-rose-50 border-rose-300" },
+            { id: 12, name: "Buku Gambar A3", price: 18000, icon: "fa-image text-cyan-500", color: "bg-cyan-50 border-cyan-300" }
+        ];
+
+        let cart = [];
+        let modalMoney = 75000;
+        let activeMission = 0;
+        let scannedProduct = null;
+        let scannedPrices = {};
+
+        function renderProducts() {
+            const grid = document.getElementById('items-grid');
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                const isScanned = scannedPrices[p.id];
+                const card = document.createElement('div');
+                card.className = `bg-white p-3 rounded-2xl border-2 ${p.color.split(' ')[1]} card-3d flex flex-col justify-between cursor-pointer select-none`;
+                card.draggable = true;
+                card.ondragstart = (e) => e.dataTransfer.setData("text/plain", p.id);
+                card.onclick = () => scanItem(p.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="h-20 w-full rounded-xl mb-2 ${p.color.split(' ')[0]} border ${p.color.split(' ')[1]} flex items-center justify-center relative overflow-hidden">
+                            <i class="fa-solid ${p.icon} text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-brandDark text-xs text-center line-clamp-1">${p.name}</h4>
+                        <p class="text-center font-extrabold text-xs mt-1 ${isScanned ? 'text-brandGreen' : 'text-gray-400'}">
+                            ${isScanned ? 'Rp ' + p.price.toLocaleString('id-ID') : 'Rp ??? (Scan)'}
+                        </p>
+                    </div>
+                    <button class="mt-2 w-full bg-slate-100 hover:bg-brandYellow hover:text-brandDark font-bold py-1 rounded-xl text-[10px] flex items-center justify-center gap-1 transition-colors">
+                        <i class="fa-solid fa-barcode"></i> Scan Harga
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function scanItem(productId) {
+            playSound('scan');
+            const p = products.find(item => item.id === parseInt(productId));
+            scannedProduct = p;
+            scannedPrices[p.id] = true;
+
+            document.getElementById('scanner-icon-display').className = `w-16 h-16 rounded-2xl bg-white border-2 border-brandGreen flex items-center justify-center text-3xl mx-auto shadow-md ${p.icon.split(' ')[1]}`;
+            document.getElementById('scanner-icon-display').innerHTML = `<i class="fa-solid ${p.icon.split(' ')[0]}"></i>`;
+            document.getElementById('scanner-name-display').innerText = p.name;
+            document.getElementById('scanner-price-display').innerHTML = `<span class="text-base font-extrabold text-brandGreen">Harga: Rp ${p.price.toLocaleString('id-ID')}</span>`;
+            document.getElementById('btn-add-scanned').classList.remove('hidden');
+
+            renderProducts();
+        }
+
+        function allowDrop(ev) { ev.preventDefault(); }
+        function handleDropScan(ev) {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData("text/plain");
+            if (id) scanItem(id);
+        }
+
+        function addScannedToCart() {
+            if (!scannedProduct) return;
+            addToCart(scannedProduct.id);
+        }
+
+        function addToCart(productId) {
+            playSound('coin');
+            const product = products.find(p => p.id === productId);
+            const currentTotal = calculateTotalCart();
+
+            if (currentTotal + product.price > modalMoney) {
+                showModal("Modal Dompet Kurang!", `Total belanja melebihi modal dompet awalmu Rp ${modalMoney.toLocaleString('id-ID')}. Coba pilih barang lain!`, "fa-triangle-exclamation", "text-amber-500 bg-amber-100");
+                return;
+            }
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            renderCart();
+        }
+
+        function removeFromCart(productId) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                if (cart[index].qty > 1) cart[index].qty -= 1;
+                else cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            renderCart();
+        }
+
+        function calculateTotalCart() {
+            return cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        }
+
+        function renderCart() {
+            const listContainer = document.getElementById('cart-list');
+            const totalDisplay = document.getElementById('cart-total');
+            const topTotalDisplay = document.getElementById('display-total-keranjang');
+            const displayModal = document.getElementById('display-modal');
+
+            listContainer.innerHTML = '';
+            const total = calculateTotalCart();
+            const sisaModal = modalMoney - total;
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = `<p class="text-gray-400 text-xs italic text-center py-6">Keranjang belanja masih kosong.</p>`;
+            } else {
+                cart.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = "flex items-center justify-between bg-gray-50 p-2 rounded-xl border border-gray-100 text-xs";
+                    el.innerHTML = `
+                        <div>
+                            <span class="font-bold text-brandDark block line-clamp-1">${item.name}</span>
+                            <span class="text-gray-500 text-[10px]">Rp ${item.price.toLocaleString('id-ID')} x ${item.qty}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-brandBlue text-xs">Rp ${(item.price * item.qty).toLocaleString('id-ID')}</span>
+                            <button onclick="removeFromCart(${item.id})" class="text-brandRed hover:bg-red-50 p-1 rounded">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </div>
+                    `;
+                    listContainer.appendChild(el);
+                });
+            }
+
+            totalDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            topTotalDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            displayModal.innerText = `Rp ${sisaModal.toLocaleString('id-ID')}`;
+        }
+
+        function setMission(level) {
+            activeMission = level;
+            const badge = document.getElementById('mission-badge');
+            const desc = document.getElementById('mission-description');
+
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`btn-misi-${i}`).className = "btn-bounce p-2 rounded-xl border-2 border-gray-200 bg-gray-50 text-xs font-bold text-center";
+            }
+            document.getElementById(`btn-misi-${level}`).className = "btn-bounce p-2 rounded-xl border-2 border-brandGreen bg-green-100 text-green-900 font-bold text-center shadow-md";
+
+            badge.innerText = `Level ${level}`;
+            if (level === 1) desc.innerHTML = "<strong>Misi Level 1:</strong> Belanja barang hingga total belanjaan tepat <strong>Rp 20.000</strong>!";
+            else if (level === 2) desc.innerHTML = "<strong>Misi Level 2:</strong> Belanja sehingga sisa kembalian dari Rp75.000 bernilai tepat <strong>Rp 25.000</strong>!";
+            else if (level === 3) desc.innerHTML = "<strong>Misi Level 3:</strong> Beli minimal <strong>4 jenis barang berbeda</strong> tanpa melampaui Rp 75.000!";
+            else if (level === 4) desc.innerHTML = "<strong>Misi Level 4:</strong> Beli minimal 3 barang tapi sisa uang dompet <strong>lebih dari Rp 40.000</strong>!";
+            else if (level === 5) desc.innerHTML = "<strong>Misi Level 5:</strong> Belanja hingga sisa uang kembalian <strong>kurang dari Rp 5.000</strong>!";
+        }
+
+        function verifyTransaction() {
+            const totalCart = calculateTotalCart();
+            const inputVal = document.getElementById('input-kembalian').value;
+
+            if (cart.length === 0) {
+                showModal("Keranjang Kosong!", "Scan & masukkan barang ke keranjang terlebih dahulu.", "fa-basket-shopping", "text-amber-500 bg-amber-100");
+                return;
+            }
+            if (!inputVal || isNaN(inputVal)) {
+                showModal("Input Belum Diisi!", "Masukkan angka hitungan sisa uang kembalianmu.", "fa-keyboard", "text-amber-500 bg-amber-100");
+                return;
+            }
+
+            const userKembalian = parseInt(inputVal);
+            const actualKembalian = modalMoney - totalCart;
+
+            if (userKembalian === actualKembalian) {
+                let successMsg = `Perhitungan kamu 100% Benar! Kembalian = Rp ${actualKembalian.toLocaleString('id-ID')}.`;
+                if (activeMission === 1 && totalCart === 20000) successMsg += " Misi Level 1 Sukses!";
+                else if (activeMission === 2 && actualKembalian === 25000) successMsg += " Misi Level 2 Sukses!";
+                else if (activeMission === 3 && cart.length >= 4) successMsg += " Misi Level 3 Sukses!";
+                else if (activeMission === 4 && actualKembalian > 40000) successMsg += " Misi Level 4 Sukses!";
+                else if (activeMission === 5 && actualKembalian < 5000) successMsg += " Misi Level 5 Sukses!";
+
+                playSound('success');
+                triggerConfetti();
+                showModal("Transaksi Berhasil!", successMsg, "fa-circle-check", "text-brandGreen bg-green-100");
+            } else {
+                showModal("Hitungan Kurang Tepat", `Kembalianmu (Rp ${userKembalian.toLocaleString('id-ID')}) belum cocok. Rumus: Rp 75.000 - Total (Rp ${totalCart.toLocaleString('id-ID')}).`, "fa-circle-xmark", "text-brandRed bg-red-100");
+            }
+        }
+
+        // KUIS SIMULATOR KASIR 10 SOAL
+        const quizData = [
+            { customer: "Budi (Siswa SD)", avatar: "fa-user-graduate", question: "1. Budi membeli Tas Sekolah (Rp 45.000) & Buku Tulis (Rp 5.000). Bayar Rp 100.000. Kembalian?", totalBelanja: 50000, uangDibayar: 100000, itemsVisual: [{ name: "Tas Sekolah", price: "Rp 45.000", icon: "fa-bag-shopping" }, { name: "Buku Tulis", price: "Rp 5.000", icon: "fa-book" }], paidVisual: { text: "Rp 100.000", bg: "bg-red-600" }, options: [{ text: "Rp 40.000", correct: false }, { text: "Rp 50.000", correct: true }, { text: "Rp 60.000", correct: false }], explanation: "Total = Rp 50.000. Kembalian = Rp 100.000 - Rp 50.000 = Rp 50.000." },
+            { customer: "Ibu Ani", avatar: "fa-user-nurse", question: "2. Ibu Ani membeli 2 Susu UHT (Rp 24.000) & Roti Tawar (Rp 15.000). Bayar Rp 50.000. Kembalian?", totalBelanja: 39000, uangDibayar: 50000, itemsVisual: [{ name: "2x Susu UHT", price: "Rp 24.000", icon: "fa-wine-bottle" }, { name: "Roti Tawar", price: "Rp 15.000", icon: "fa-bread-slice" }], paidVisual: { text: "Rp 50.000", bg: "bg-blue-600" }, options: [{ text: "Rp 11.000", correct: true }, { text: "Rp 15.000", correct: false }, { text: "Rp 21.000", correct: false }], explanation: "Total = Rp 39.000. Kembalian = Rp 50.000 - Rp 39.000 = Rp 11.000." },
+            { customer: "Doni (Siswa SD)", avatar: "fa-user-astro", question: "3. Doni membeli Crayon (Rp 35.000) & Kotak Pensil (Rp 25.000). Bayar Rp 70.000. Kembalian?", totalBelanja: 60000, uangDibayar: 70000, itemsVisual: [{ name: "Crayon 24W", price: "Rp 35.000", icon: "fa-palette" }, { name: "Kotak Pensil", price: "Rp 25.000", icon: "fa-box" }], paidVisual: { text: "Rp 70.000", bg: "bg-emerald-600" }, options: [{ text: "Rp 5.000", correct: false }, { text: "Rp 10.000", correct: true }, { text: "Rp 15.000", correct: false }], explanation: "Total = Rp 60.000. Kembalian = Rp 70.000 - Rp 60.000 = Rp 10.000." },
+            { customer: "Siti (Siswa SD)", avatar: "fa-user-ninja", question: "4. Siti belanja Botol Minum (Rp 30.000) & Buku Gambar (Rp 18.000). Bayar modal Rp 75.000. Kembalian?", totalBelanja: 48000, uangDibayar: 75000, itemsVisual: [{ name: "Botol Minum", price: "Rp 30.000", icon: "fa-bottle-water" }, { name: "Buku Gambar", price: "Rp 18.000", icon: "fa-image" }], paidVisual: { text: "Rp 75.000", bg: "bg-amber-600" }, options: [{ text: "Rp 27.000", correct: true }, { text: "Rp 25.000", correct: false }, { text: "Rp 30.000", correct: false }], explanation: "Total = Rp 48.000. Kembalian = Rp 75.000 - Rp 48.000 = Rp 27.000." },
+            { customer: "Pak Ahmad", avatar: "fa-user-tie", question: "5. Pak Ahmad membeli barang senilai Rp 85.000. Bayar Rp 100.000. Kembalian?", totalBelanja: 85000, uangDibayar: 100000, itemsVisual: [{ name: "Perlengkapan", price: "Rp 85.000", icon: "fa-briefcase" }], paidVisual: { text: "Rp 100.000", bg: "bg-red-600" }, options: [{ text: "Rp 15.000", correct: true }, { text: "Rp 20.000", correct: false }, { text: "Rp 10.000", correct: false }], explanation: "Kembalian = Rp 100.000 - Rp 85.000 = Rp 15.000." },
+            { customer: "Rani (Siswa SD)", avatar: "fa-user-graduate", question: "6. Rani membeli 3 Buku Tulis (Rp 15.000) & Penghapus (Rp 2.000). Bayar Rp 20.000. Kembalian?", totalBelanja: 17000, uangDibayar: 20000, itemsVisual: [{ name: "3x Buku Tulis", price: "Rp 15.000", icon: "fa-book" }, { name: "Penghapus", price: "Rp 2.000", icon: "fa-eraser" }], paidVisual: { text: "Rp 20.000", bg: "bg-emerald-600" }, options: [{ text: "Rp 3.000", correct: true }, { text: "Rp 5.000", correct: false }, { text: "Rp 2.000", correct: false }], explanation: "Total = Rp 17.000. Kembalian = Rp 20.000 - Rp 17.000 = Rp 3.000." },
+            { customer: "Kak Bayu", avatar: "fa-user-astronaut", question: "7. Kak Bayu membeli Biskuit (Rp 10.000) & Roti Tawar (Rp 15.000). Bayar Rp 50.000. Kembalian?", totalBelanja: 25000, uangDibayar: 50000, itemsVisual: [{ name: "Biskuit", price: "Rp 10.000", icon: "fa-cookie" }, { name: "Roti Tawar", price: "Rp 15.000", icon: "fa-bread-slice" }], paidVisual: { text: "Rp 50.000", bg: "bg-blue-600" }, options: [{ text: "Rp 25.000", correct: true }, { text: "Rp 30.000", correct: false }, { text: "Rp 20.000", correct: false }], explanation: "Total = Rp 25.000. Kembalian = Rp 50.000 - Rp 25.000 = Rp 25.000." },
+            { customer: "Dina (Siswa SD)", avatar: "fa-user-ninja", question: "8. Dina membeli Penggaris (Rp 4.000) & Susu UHT (Rp 12.000). Bayar Rp 20.000. Kembalian?", totalBelanja: 16000, uangDibayar: 20000, itemsVisual: [{ name: "Penggaris", price: "Rp 4.000", icon: "fa-ruler" }, { name: "Susu UHT", price: "Rp 12.000", icon: "fa-wine-bottle" }], paidVisual: { text: "Rp 20.000", bg: "bg-emerald-600" }, options: [{ text: "Rp 4.000", correct: true }, { text: "Rp 5.000", correct: false }, { text: "Rp 6.000", correct: false }], explanation: "Total = Rp 16.000. Kembalian = Rp 20.000 - Rp 16.000 = Rp 4.000." },
+            { customer: "Paman Eko", avatar: "fa-user-doctor", question: "9. Paman Eko membeli Tas (Rp 45.000) & Botol Minum (Rp 30.000). Bayar Rp 100.000. Kembalian?", totalBelanja: 75000, uangDibayar: 100000, itemsVisual: [{ name: "Tas Sekolah", price: "Rp 45.000", icon: "fa-bag-shopping" }, { name: "Botol Minum", price: "Rp 30.000", icon: "fa-bottle-water" }], paidVisual: { text: "Rp 100.000", bg: "bg-red-600" }, options: [{ text: "Rp 25.000", correct: true }, { text: "Rp 20.000", correct: false }, { text: "Rp 30.000", correct: false }], explanation: "Total = Rp 75.000. Kembalian = Rp 100.000 - Rp 75.000 = Rp 25.000." },
+            { customer: "Tono (Siswa SD)", avatar: "fa-user-graduate", question: "10. Tono membeli 2 Biskuit Cokelat (Rp 20.000). Bayar Rp 50.000. Kembalian?", totalBelanja: 20000, uangDibayar: 50000, itemsVisual: [{ name: "2x Biskuit", price: "Rp 20.000", icon: "fa-cookie" }], paidVisual: { text: "Rp 50.000", bg: "bg-blue-600" }, options: [{ text: "Rp 30.000", correct: true }, { text: "Rp 20.000", correct: false }, { text: "Rp 25.000", correct: false }], explanation: "Total = Rp 20.000. Kembalian = Rp 50.000 - Rp 20.000 = Rp 30.000." }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        window.onload = function () {
+            startBGM();
+            initBubbleGame();
+            renderProducts();
+            renderCart();
+            loadQuizQuestion();
+        };
+
+        function switchTab(tabName) {
+            playSound('coin');
+            ['konsep', 'penjelasan', 'materi', 'pasar', 'kuis'].forEach(t => {
+                const sec = document.getElementById(`section-${t}`);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (sec) sec.classList.add('hidden');
+                if (btn) btn.className = "px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 text-gray-600 hover:text-brandDark flex items-center gap-1.5 whitespace-nowrap";
+            });
+
+            const activeSec = document.getElementById(`section-${tabName}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+
+            if (activeSec) activeSec.classList.remove('hidden');
+            if (activeBtn) {
+                const btnColor = tabName === 'konsep' ? 'bg-brandBlue' : tabName === 'penjelasan' ? 'bg-amber-500' : tabName === 'materi' ? 'bg-emerald-500' : tabName === 'pasar' ? 'bg-brandGreen' : 'bg-brandRed';
+                activeBtn.className = `px-3 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 ${btnColor} text-white shadow flex items-center gap-1.5 whitespace-nowrap`;
+            }
+        }
+
+        function openMoneyInfoModal(index) {
+            playSound('coin');
+            currentMoneyIndex = index;
+            updateMoneyInfoUI();
+            document.getElementById('modal-money-info').classList.remove('hidden');
+        }
+        function closeMoneyInfoModal() { document.getElementById('modal-money-info').classList.add('hidden'); }
+        function nextMoneyInfo() { currentMoneyIndex = (currentMoneyIndex + 1) % moneyData.length; updateMoneyInfoUI(); }
+        function prevMoneyInfo() { currentMoneyIndex = (currentMoneyIndex - 1 + moneyData.length) % moneyData.length; updateMoneyInfoUI(); }
+
+        function updateMoneyInfoUI() {
+            const data = moneyData[currentMoneyIndex];
+            document.getElementById('info-modal-title').innerText = data.title;
+            document.getElementById('info-front-nominal').innerText = data.nominalText;
+            document.getElementById('info-front-hero').innerText = data.hero;
+            document.getElementById('info-front-badge').className = `text-[9px] font-black px-2 py-0.5 rounded ${data.badgeBg}`;
+            document.getElementById('info-front-bg').style.backgroundImage = `url('${data.frontImg}')`;
+            document.getElementById('info-back-nominal').innerText = data.nominalText;
+            document.getElementById('info-back-culture').innerText = data.culture;
+            document.getElementById('info-back-bg').style.backgroundImage = `url('${data.backImg}')`;
+            document.getElementById('info-summary').innerText = data.summary;
+            document.getElementById('info-size').innerText = data.size;
+            document.getElementById('info-color').innerText = data.color;
+        }
+
+        function loadQuizQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('customer-name').innerText = q.customer;
+            document.getElementById('quiz-question').innerText = q.question;
+            document.getElementById('quiz-progress').innerText = `${currentQuizIndex + 1}/10`;
+            document.getElementById('quiz-level-badge').innerText = `Pelanggan #${currentQuizIndex + 1}`;
+            document.getElementById('customer-avatar').innerHTML = `<i class="fa-solid ${q.avatar}"></i>`;
+            document.getElementById('pos-total-display').innerText = `Rp ${q.totalBelanja.toLocaleString('id-ID')}`;
+            document.getElementById('pos-paid-display').innerText = `Rp ${q.uangDibayar.toLocaleString('id-ID')}`;
+            document.getElementById('pos-change-input').innerText = `Rp ???`;
+
+            const itemsVisualBox = document.getElementById('customer-items-visual');
+            itemsVisualBox.innerHTML = '';
+            q.itemsVisual.forEach(it => {
+                const itemCard = document.createElement('div');
+                itemCard.className = "bg-white p-2.5 rounded-xl border border-slate-200 card-3d flex items-center gap-2 text-xs";
+                itemCard.innerHTML = `<div class="w-7 h-7 rounded-lg bg-brandBlue/10 text-brandBlue flex items-center justify-center font-bold"><i class="fa-solid ${it.icon}"></i></div><div><span class="font-bold text-brandDark block text-[11px]">${it.name}</span><span class="text-brandGreen font-extrabold text-[10px]">${it.price}</span></div>`;
+                itemsVisualBox.appendChild(itemCard);
+            });
+
+            document.getElementById('customer-payment-visual').innerHTML = `<div class="${q.paidVisual.bg} text-white font-extrabold px-4 py-2 rounded-xl cash-note-3d text-sm font-fun flex items-center gap-2 border border-white/30 shadow-md"><i class="fa-solid fa-money-bill-wave"></i> ${q.paidVisual.text}</div>`;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-bounce text-center p-3 rounded-xl border-2 border-slate-600 bg-slate-800 hover:bg-slate-700 hover:border-brandYellow font-extrabold text-white text-sm transition-all shadow-md font-fun";
+                btn.innerText = opt.text;
+                btn.onclick = () => selectQuizOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(index) {
+            const q = quizData[currentQuizIndex];
+            const selected = q.options[index];
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const feedbackStatus = document.getElementById('feedback-status');
+            const feedbackExp = document.getElementById('feedback-explanation');
+            const optionsBtns = document.getElementById('quiz-options').children;
+
+            for (let i = 0; i < optionsBtns.length; i++) {
+                optionsBtns[i].disabled = true;
+                optionsBtns[i].classList.add('opacity-50');
+            }
+
+            document.getElementById('pos-change-input').innerText = selected.text;
+
+            if (selected.correct) {
+                playSound('success');
+                quizScore += 10;
+                document.getElementById('quiz-score').innerText = quizScore;
+                optionsBtns[index].className = "text-center p-3 rounded-xl border-2 border-green-400 bg-green-600 text-white font-extrabold text-sm shadow-lg font-fun";
+                feedbackStatus.innerHTML = `<i class="fa-solid fa-circle-check text-brandGreen"></i> Kasir Hebat! (+10 Poin)`;
+                feedbackBox.className = "p-3.5 rounded-2xl border border-green-500 bg-green-950/80 space-y-1.5 mt-2";
+                triggerConfetti();
+            } else {
+                optionsBtns[index].className = "text-center p-3 rounded-xl border-2 border-red-500 bg-red-600 text-white font-extrabold text-sm shadow-lg font-fun";
+                feedbackStatus.innerHTML = `<i class="fa-solid fa-circle-xmark text-brandRed"></i> Kembalian Kurang Tepat`;
+                feedbackBox.className = "p-3.5 rounded-2xl border border-red-500 bg-red-950/80 space-y-1.5 mt-2";
+            }
+
+            feedbackExp.innerText = q.explanation;
+            feedbackBox.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                loadQuizQuestion();
+            } else {
+                showModal("Simulasi Kasir Selesai!", `Selamat! Kamu telah melayani 10 pelanggan dengan Skor Akhir Kasir: ${quizScore}/100!`, "fa-trophy", "text-brandYellow bg-amber-100");
+                currentQuizIndex = 0;
+                quizScore = 0;
+                document.getElementById('quiz-score').innerText = 0;
+                loadQuizQuestion();
+            }
+        }
+
+        function showModal(title, message, iconClass, colorStyle) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            const iconContainer = document.getElementById('modal-icon');
+            iconContainer.className = `w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto ${colorStyle}`;
+            iconContainer.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+            document.getElementById('modal-dialog').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('modal-dialog').classList.add('hidden'); }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 } });
+            }
+        }
+    </script>
+</body>
+</html>
